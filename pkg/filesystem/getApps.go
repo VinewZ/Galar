@@ -10,9 +10,10 @@ import (
 )
 
 type App struct {
-	Name string
-	Icon string
-	Exec string
+	Name     string
+	Icon     string
+	Exec     string
+	Terminal string
 }
 
 func GetApps(APPS_PATH string) ([]App, error) {
@@ -55,6 +56,8 @@ func ParseDesktopFile(fPath string) (App, error) {
 			app.Exec = split[1]
 		case "Icon":
 			app.Icon = split[1]
+		case "Terminal":
+			app.Terminal = split[1]
 		}
 	}
 

@@ -1,4 +1,4 @@
-package customfyne
+package ui
 
 import (
 	"fyne.io/fyne/v2"
@@ -12,11 +12,11 @@ const (
   MATH
 )
 
-type MainL struct{
+type GalarLayout struct{
   Mode Mode
 }
 
-func (l *MainL) MinSize(objects []fyne.CanvasObject) fyne.Size {
+func (l *GalarLayout) MinSize(objects []fyne.CanvasObject) fyne.Size {
 	if len(objects) != 4 {
 		return fyne.NewSize(0, 0)
 	}
@@ -33,7 +33,7 @@ func (l *MainL) MinSize(objects []fyne.CanvasObject) fyne.Size {
 	return fyne.NewSize(width, height)
 }
 
-func (l *MainL) Layout(objects []fyne.CanvasObject, containerSize fyne.Size) {
+func (l *GalarLayout) Layout(objects []fyne.CanvasObject, containerSize fyne.Size) {
 	if len(objects) != 4 {
 		return
 	}
@@ -60,7 +60,7 @@ func (l *MainL) Layout(objects []fyne.CanvasObject, containerSize fyne.Size) {
 	list.Resize(fyne.NewSize(containerSize.Width, containerSize.Height-entryHeight-boxHeight))
 }
 
-func (l *MainL) UpdateLayout(objects []fyne.CanvasObject) {
+func (l *GalarLayout) UpdateLayout(objects []fyne.CanvasObject) {
   if l.Mode == MATH {
     objects[1].Show()
     objects[2].Show()
