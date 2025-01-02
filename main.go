@@ -2,37 +2,50 @@ package main
 
 import (
 	"embed"
+	"log"
 
+	"github.com/VinewZ/galar/pkg/app"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 )
 
+// Embed frontend assets
+//
 //go:embed all:frontend/dist
 var assets embed.FS
 
-func main() {
-	// Create an instance of the app structure
-	app := NewApp()
+const (
+	appTitle     = "Galar"
+	appWidth     = 800
+	appHeight    = 400
+	maxAppWidth  = 800
+	maxAppHeight = 400
+)
 
-	err := wails.Run(&options.App{
-		Title:         "Galar",
-		Width:         800,
-		Height:        400,
-		MaxWidth:      800,
-		MaxHeight:     400,
+func main() {
+	app := app.NewApp()
+	if err := wails.Run(createAppOptions(app)); err != nil {
+		log.Fatalf("Failed to start application: %v", err)
+	}
+}
+
+// createAppOptions sets up the Wails application options.
+func createAppOptions(a *app.App) *options.App {
+	return &options.App{
+		Title:         appTitle,
+		Width:         appWidth,
+		Height:        appHeight,
+		MaxWidth:      maxAppWidth,
+		MaxHeight:     maxAppHeight,
 		DisableResize: true,
 		StartHidden:   true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		OnStartup: app.startup,
+		OnStartup: a.Startup,
 		Bind: []interface{}{
-			app,
+			a,
 		},
-	})
-
-	if err != nil {
-		println("Error:", err.Error())
 	}
 }

@@ -1,4 +1,4 @@
-module galar
+module github.com/VinewZ/galar
 
 go 1.22.0
 

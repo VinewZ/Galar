@@ -1,4 +1,4 @@
-import { GetApps } from "@wailsjs/go/main/App";
+import { GetApps } from "@wailsjs/go/app/App";
 import { Body } from "./components/body";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
@@ -13,7 +13,7 @@ export type desktopAppsT = {
   Icon: string;
   Exec: string;
   Terminal: string;
-}
+};
 
 function App() {
   const [, setDesktopApps] = useAtom(desktopAppsAtom);
@@ -21,7 +21,7 @@ function App() {
 
   async function fetchApps() {
     const path = "/usr/share/applications";
-    const response = await GetApps(path);
+    const response: desktopAppsT[] = await GetApps(path);
     setDesktopApps(response);
     setFilteredDesktopApps(response);
   }
@@ -30,9 +30,8 @@ function App() {
     fetchApps();
   }, []);
 
-
   return (
-    <div id="App" className="bg-[#181a1b] text-[#afa99e] overflow-hidden p-4 relative">
+    <div id="App" className="bg-[#181a1b] text-[#afa99e] overflow-hidden p-4 relative w-[800px] h-[400px]">
       <Header />
       <Body />
       <Footer />

@@ -1,35 +1,39 @@
-import { useState, useEffect } from "react"
-import { evaluate } from "mathjs"
-import { useAtom } from "jotai"
-import { inputValueAtom } from "@src/atoms/inputValue"
-import { Separator } from "@src/components/ui/separator"
+import { useState, useEffect } from "react";
+import { evaluate } from "mathjs";
+import { useAtom } from "jotai";
+import { inputValueAtom } from "@src/atoms/inputValue";
+import { Separator } from "@src/components/ui/separator";
 
 export function Math() {
-  const [ipValue] = useAtom(inputValueAtom)
-  const [result, setResult] = useState<string | null>(null)
-  const expression = ipValue.split(' ').slice(1).join(' ')
+  const [ipValue] = useAtom(inputValueAtom);
+  const [result, setResult] = useState<string | null>(null);
+
+  // Remove the ":math" prefix from the input if it exists
+  const expression = ipValue.startsWith(":math") ? ipValue.replace(":math", "").trim() : ipValue;
 
   useEffect(() => {
-    try {
-      const calcResult = evaluate(expression)
-      setResult(calcResult.toString())
-    } catch (error) {
-      setResult('')
+    if (!expression) {
+      setResult(null);
+      return;
     }
 
-  }, [ipValue])
+    try {
+      const calcResult = evaluate(expression);
+      setResult(calcResult.toString());
+    } catch (error) {
+      console.error(error);
+    }
+  }, [expression]);
 
   return (
     <div className="flex w-full h-full">
       <div className="grid place-content-center w-1/2 text-4xl p-4">
-      {expression}
+        <span>{expression || "Expression"}</span>
       </div>
-      <Separator orientation="vertical"/>
+      <Separator orientation="vertical" />
       <div className="grid place-content-center w-1/2 text-4xl p-4">
-      {
-        result != "" ? result : ""
-      }
+        <span>{result || "Result"}</span>
       </div>
     </div>
-  )
+  );
 }

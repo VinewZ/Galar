@@ -1,4 +1,4 @@
-import { ExecApp, HideApp } from "@wailsjs/go/main/App";
+import { ExecApp, HideApp } from "@wailsjs/go/app/App"
 import { ChangeEvent, useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { selectedAppIdxAtom } from "@src/atoms/selectedAppIdx";
@@ -53,7 +53,7 @@ export function Header() {
 
   function determineAppMode(inputValue: string): ModeENUM {
     const [mode] = inputValue.trim().split(' ');
-    return ModeENUM[mode.toUpperCase() as keyof typeof ModeENUM] || ModeENUM[":FILE_EXPLORER"];
+    return ModeENUM[mode.toUpperCase() as keyof typeof ModeENUM] || ModeENUM[":APP_LAUNCHER"];
   }
 
   function filterDesktopApps(inputValue: string): desktopAppsT[] {
@@ -74,9 +74,9 @@ export function Header() {
 
   return (
     <form
-      className="h-[50px] max-h-[50px] bg-[#1e2022] flex gap-3 items-center px-2 rounded-lg mb-1"
+      className="h-[50px] max-h-[50px] bg-[#1e2022] flex gap-3 items-center px-2 rounded-lg"
       onSubmit={handleSubmit}>
-      <Search color="#afa99e" size={22}/>
+      <Search color="#afa99e" size={22} />
       <Input
         className="focus-visible:ring-0 border-0 text-xl h-full p-0 m-0 w-full"
         placeholder="Search App"

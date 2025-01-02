@@ -1,9 +1,9 @@
 import { atom } from "jotai"
 
 export enum ModeENUM {
-  ":FILE_EXPLORER" = ':file_explorer',
+  ":APP_LAUNCHER" = ':app_launcher',
   ":MATH" = ':math',
   ":CMDS" = ':cmds'
 }
 
-export const appModeAtom = atom(ModeENUM[":FILE_EXPLORER"])
+export const appModeAtom = atom(ModeENUM[":APP_LAUNCHER"])
