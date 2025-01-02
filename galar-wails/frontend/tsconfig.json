@@ -2,8 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "@wailsjs/*": ["wailsjs/*"]
+      "@src/*": ["src/*"],
+      "@wailsjs/*": ["wailsjs/*"],
+      "@components/*": ["src/components/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,

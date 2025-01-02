@@ -9,6 +9,7 @@ import (
 )
 
 type DesktopApp struct {
+	Id       int
 	Name     string
 	Icon     string
 	Exec     string
@@ -24,7 +25,7 @@ func (a *App) GetApps(APPS_PATH string) ([]DesktopApp, error) {
 	var apps []DesktopApp
 
 	for _, entry := range dir {
-		app, err := ParseDesktopFile(filepath.Join(APPS_PATH, entry.Name()))
+		app, err := ParseDesktopFile(filepath.Join(APPS_PATH, entry.Name()), len(apps))
 		if err != nil {
 			LogError(err, "Can't read desktop file: %v", true)
 		}
@@ -35,7 +36,7 @@ func (a *App) GetApps(APPS_PATH string) ([]DesktopApp, error) {
 	return apps, nil
 }
 
-func ParseDesktopFile(fPath string) (DesktopApp, error) {
+func ParseDesktopFile(fPath string, appsLen int) (DesktopApp, error) {
 	file, err := os.ReadFile(fPath)
 	if err != nil {
 		return DesktopApp{}, err
@@ -45,7 +46,9 @@ func ParseDesktopFile(fPath string) (DesktopApp, error) {
 
 	scanner := bufio.NewScanner(strings.NewReader(mainSection))
 
-	app := DesktopApp{}
+	app := DesktopApp{
+    Id: appsLen,
+  }
 	for scanner.Scan() {
 		split := strings.Split(scanner.Text(), "=")
 		switch split[0] {
@@ -85,7 +88,7 @@ func LogError(err error, message string, exit bool) {
 		log.Printf("%s: %v", message, err)
 	}
 
-  if exit {
-    os.Exit(1)
-  }
+	if exit {
+		os.Exit(1)
+	}
 }

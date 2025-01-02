@@ -10,6 +10,10 @@ export function GetApps(arg1) {
   return window['go']['main']['App']['GetApps'](arg1);
 }
 
-export function Greet(arg1) {
-  return window['go']['main']['App']['Greet'](arg1);
+export function HideApp() {
+  return window['go']['main']['App']['HideApp']();
+}
+
+export function ShowApp() {
+  return window['go']['main']['App']['ShowApp']();
 }

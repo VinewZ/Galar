@@ -1,14 +1,17 @@
 module galar-wails
 
-go 1.21
+go 1.22.0
 
 toolchain go1.23.4
 
-require github.com/wailsapp/wails/v2 v2.9.2
+require (
+	github.com/robotn/gohook v0.41.0
+	github.com/wailsapp/wails/v2 v2.9.2
+)
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
-	github.com/go-ole/go-ole v1.2.6 // indirect
+	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
@@ -24,16 +27,19 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/samber/lo v1.38.1 // indirect
+	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/tkrajina/go-reflector v0.5.6 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	github.com/vcaesar/keycode v0.10.1 // indirect
+	github.com/vcaesar/tt v0.20.1 // indirect
 	github.com/wailsapp/go-webview2 v1.0.16 // indirect
 	github.com/wailsapp/mimetype v1.4.1 // indirect
 	golang.org/x/crypto v0.23.0 // indirect
-	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
+	golang.org/x/exp v0.0.0-20241004190924-225e2abe05e6 // indirect
 	golang.org/x/net v0.25.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/text v0.15.0 // indirect
+	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/text v0.19.0 // indirect
 )
 
 // replace github.com/wailsapp/wails/v2 v2.9.2 => /home/vinew/go/pkg/mod

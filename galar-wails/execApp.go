@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -26,7 +25,6 @@ func (a * App) ExecApp(app DesktopApp) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Println(term)
 	err := cmd.Start()
 	if err != nil {
 		return err

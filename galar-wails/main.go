@@ -6,6 +6,7 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+
 )
 
 //go:embed all:frontend/dist
@@ -15,14 +16,14 @@ func main() {
 	// Create an instance of the app structure
 	app := NewApp()
 
-	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "Galar",
-		Width:  800,
-		Height: 400,
-    MaxWidth: 800,
-    MaxHeight: 400,
-    DisableResize: true,
+		Title:         "Galar",
+		Width:         800,
+		Height:        400,
+		MaxWidth:      800,
+		MaxHeight:     400,
+		DisableResize: true,
+		StartHidden:   true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},

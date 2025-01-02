@@ -6,4 +6,6 @@ export function ExecApp(arg1:main.DesktopApp):Promise<void>;
 
 export function GetApps(arg1:string):Promise<Array<main.DesktopApp>>;
 
-export function Greet(arg1:string):Promise<string>;
+export function HideApp():Promise<void>;
+
+export function ShowApp():Promise<void>;
