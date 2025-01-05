@@ -87,8 +87,12 @@ To close the app, just press **SUPER + SPACE** again.
 ```
 ## TODO
 - [ ]   Create a cmd to Kill the app (cmd :kill(?))
+``` The Only Way to kill the app by now is killing the process in the terminal. ```
 - [ ]   Settings page (cmd :settings (?))
-    - [ ]   Plugin manager
     - [ ]   Theme manager
     - [ ]   Custom shortcuts
     - [ ]   Select port to run the API
+- [ ]   CLI
+    - [ ]   Install Plugins
+    - [ ]   Uninstall Plugins
+    - [ ]   Bootstrap New Plugin
