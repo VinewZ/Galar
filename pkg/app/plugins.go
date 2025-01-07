@@ -9,7 +9,7 @@ import (
 
 type Plugin struct {
   Dir     string `json:"dir"`
-	ID      int    `json:"id"`
+	ID      int 
 	Name    string `json:"name"`
 	Entry   string `json:"entry"`
 	Style   string `json:"style"`
@@ -31,7 +31,7 @@ func (a *App) GetPlugins() ([]Plugin, error) {
 	}
 
 	var allPlugins []Plugin
-	pId := 0
+  pId := 0
 
 	for _, plugin := range plugins {
 		if plugin.IsDir() {
@@ -41,11 +41,11 @@ func (a *App) GetPlugins() ([]Plugin, error) {
 				var p Plugin
 				err := json.Unmarshal(data, &p)
 				if err != nil {
-					log.Printf("Skipping invalid plugin %s", plugin.Name())
+          log.Printf("Skipping invalid plugin %s\nError: %v", plugin.Name(), err)
 				}
+        p.ID = pId
         p.Dir = plugin.Name()
-				p.ID = pId
-				pId++
+        pId++
 				allPlugins = append(allPlugins, p)
 			}
 		}

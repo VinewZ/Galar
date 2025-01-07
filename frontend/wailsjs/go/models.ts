@@ -22,7 +22,7 @@ export namespace app {
 	}
 	export class Plugin {
 	    dir: string;
-	    id: number;
+	    ID: number;
 	    name: string;
 	    entry: string;
 	    style: string;
@@ -36,7 +36,7 @@ export namespace app {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.dir = source["dir"];
-	        this.id = source["id"];
+	        this.ID = source["ID"];
 	        this.name = source["name"];
 	        this.entry = source["entry"];
 	        this.style = source["style"];
