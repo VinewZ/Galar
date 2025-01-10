@@ -3,9 +3,12 @@ export namespace app {
 	export class DesktopApp {
 	    Id: number;
 	    Name: string;
+	    GenericName: string;
+	    Comment: string;
 	    Icon: string;
 	    Exec: string;
 	    Terminal: string;
+	    Keywords: string[];
 	
 	    static createFrom(source: any = {}) {
 	        return new DesktopApp(source);
@@ -15,9 +18,12 @@ export namespace app {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.Id = source["Id"];
 	        this.Name = source["Name"];
+	        this.GenericName = source["GenericName"];
+	        this.Comment = source["Comment"];
 	        this.Icon = source["Icon"];
 	        this.Exec = source["Exec"];
 	        this.Terminal = source["Terminal"];
+	        this.Keywords = source["Keywords"];
 	    }
 	}
 	export class Plugin {

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { GetPlugins } from "@wailsjs/go/app/App";
 import { app } from "@wailsjs/go/models";
 import { PluginLoader } from "./PluginLoader";
-import { useListenToEvent } from "@src/hooks/useListenEvent";
 import { AppLauncher } from "./AppLauncher";
+import { useAtom } from "jotai";
+import { inputAtom } from "@src/atoms/input";
+import { modeAtom } from "@src/atoms/mode";
 
 type ContentPropsT = {
   filteredDesktopApps: app.DesktopApp[];
@@ -11,26 +13,26 @@ type ContentPropsT = {
 }
 
 export function Content({ filteredDesktopApps, selectedAppidx }: ContentPropsT) {
+  const [inputValue] = useAtom<string>(inputAtom);
+  const [mode, setMode] = useAtom<string>(modeAtom);
   const [plugins, setPlugins] = useState<app.Plugin[]>([]);
-  const [inputValue, setInputValue] = useState<string>("");
-  const [plugin, setPlugin] = useState<app.Plugin | undefined>(undefined);
+  const [plugin, setPlugin] = useState<app.Plugin>();
 
-  const cmds = plugins.map((p) => p.command);
-  const mode = getMode(inputValue);
+  const cmds = plugins && plugins.map((p) => p.command)
 
-  useListenToEvent("input:change", (detail) => {
-    setInputValue(detail.message);
-  });
-
-  function getMode(input: string): string | undefined {
-    if (input === "") return;
+  function getMode(input: string): string {
     const firstWord = input.split(" ")[0];
-    const cmd = cmds.find((c) => c.cmd === firstWord);
-    return cmd?.cmd;
+    const cmd = cmds && cmds.find((c) => c.cmd === firstWord);
+    return cmd?.cmd
   }
 
   useEffect(() => {
-    const el = plugins.find((p) => p.command.cmd === mode);
+    const mode = getMode(inputValue);
+    setMode(mode);
+  }, [inputValue]);
+
+  useEffect(() => {
+    const el = plugins && plugins.find((p) => p.command.cmd === mode);
     setPlugin(el || undefined);
   }, [inputValue, plugins, mode]);
 
@@ -42,15 +44,17 @@ export function Content({ filteredDesktopApps, selectedAppidx }: ContentPropsT) 
   }, []);
 
   return (
-    <main className="h-full rounded-lg overflow-hidden my-2">
-      {
-        plugin ?
-          <PluginLoader plugin={plugin} />
-          : <AppLauncher
-            filteredDesktopApps={filteredDesktopApps}
-            selectedAppidx={selectedAppidx}
-          />
-      }
-    </main>
+    <>
+      <main className="h-full rounded-lg overflow-hidden mt-2">
+        {
+          plugin ?
+            <PluginLoader plugin={plugin} />
+            : <AppLauncher
+              filteredDesktopApps={filteredDesktopApps}
+              selectedAppidx={selectedAppidx}
+            />
+        }
+      </main>
+    </>
   );
 }

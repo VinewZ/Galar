@@ -1,9 +1,11 @@
 import { Search } from "lucide-react";
 import { Input } from "@components/ui/input";
-import { ChangeEvent, useEffect, useRef, useCallback, useState, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, useEffect, useRef, useCallback, Dispatch, SetStateAction } from "react";
 import { useEmitEvent } from "@src/hooks/useEmitEvent";
 import { ExecApp, HideApp } from "@wailsjs/go/app/App";
 import { app } from "@wailsjs/go/models";
+import { useAtom } from "jotai";
+import { inputAtom } from "@src/atoms/input";
 
 type HeaderPropsT = {
   desktopApps: app.DesktopApp[];
@@ -16,40 +18,58 @@ type HeaderPropsT = {
 export function Header({ desktopApps, filteredDesktopApps, setFilteredDesktopApps, selectionIdx, setSelectionIdx }: HeaderPropsT) {
   const emitEvent = useEmitEvent();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useAtom<string>(inputAtom)
+  const [mode] = useAtom<string>(inputAtom);
 
-  // Corrected filtering logic
-  const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.toLowerCase();
+  function setAndEmitInputValue(value: string) {
     setInputValue(value);
     emitEvent("input:change", { message: value });
+  }
 
-    const filteredApps = value === ""
-      ? desktopApps
-      : desktopApps.filter((app) => app.Name.toLowerCase().includes(value));
+  const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const lowerValue = event.target.value.toLowerCase();
+    setAndEmitInputValue(lowerValue);
 
-    setFilteredDesktopApps(filteredApps);
-    setSelectionIdx(0); // Reset selection when filtering changes
+    if (lowerValue === "") {
+      setFilteredDesktopApps(desktopApps);
+    } else {
+      const filteredApps = desktopApps.filter(({ Name, GenericName, Exec, Keywords }) => {
+        const lowerName = Name.toLowerCase();
+        const lowerGenericName = GenericName?.toLowerCase();
+        const lowerExec = Exec?.toLowerCase();
+        const lowerKeywords = Keywords?.map(keyword => keyword.toLowerCase());
 
-    // Send input event to iframe
-    const iframe = document.querySelector("#plugin-iframe") as HTMLIFrameElement;
-    iframe?.contentWindow?.postMessage({ type: "input:change", message: value }, "*");
-  }, [emitEvent, desktopApps, setFilteredDesktopApps]);
+        return (
+          lowerName.includes(lowerValue) ||
+          (lowerGenericName && lowerGenericName.includes(lowerValue)) ||
+          (lowerExec && lowerExec.includes(lowerValue)) ||
+          (lowerKeywords && lowerKeywords.some(keyword => keyword.includes(lowerValue)))
+        );
+      });
+
+      setFilteredDesktopApps(filteredApps);
+    }
+
+    setSelectionIdx(0);
+
+    document.querySelector<HTMLIFrameElement>("#plugin-iframe")
+      ?.contentWindow?.postMessage({ type: "input:change", message: lowerValue }, "*");
+  }, [desktopApps, setFilteredDesktopApps]);
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const selectedApp = filteredDesktopApps[selectionIdx];
-      if (selectedApp) {
-        await ExecApp(selectedApp);
+      if (selectedApp && mode) {
+        HideApp();
+        ExecApp(selectedApp);
+        setAndEmitInputValue("");
+        setSelectionIdx(0)
+        setFilteredDesktopApps(desktopApps);
       }
-      await HideApp();
-      setInputValue("");
-      emitEvent("input:change", { message: "" });
-      setFilteredDesktopApps(desktopApps);
-      setSelectionIdx(0); // Reset selection after submit
+      emitEvent("input:submit", { message: inputValue });
     },
-    [emitEvent, setFilteredDesktopApps, desktopApps, filteredDesktopApps, selectionIdx]
+    [setFilteredDesktopApps, desktopApps, filteredDesktopApps, selectionIdx]
   );
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -65,7 +85,7 @@ export function Header({ desktopApps, filteredDesktopApps, setFilteredDesktopApp
 
   return (
     <form
-      className="h-14 bg-[#1e2022] flex gap-3 items-center px-2 rounded-lg"
+      className="h-14 bg-[#1e2022] flex gap-3 items-center px-2 rounded-lg m-2 mb-0"
       onSubmit={handleSubmit}
     >
       <Search className="size-6" />

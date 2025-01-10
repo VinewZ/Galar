@@ -7,15 +7,17 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 )
 
 type DesktopApp struct {
-	Id       int
-	Name     string
-	Icon     string
-	Exec     string
-	Terminal string
+	Id          int
+	Name        string
+	GenericName string
+	Comment     string
+	Icon        string
+	Exec        string
+	Terminal    string
+  Keywords    []string
 }
 
 func (a *App) GetApps(APPS_PATH string) ([]DesktopApp, error) {
@@ -30,7 +32,7 @@ func (a *App) GetApps(APPS_PATH string) ([]DesktopApp, error) {
 	for _, entry := range dir {
 		app, err := parseDesktopFile(filepath.Join(APPS_PATH, entry.Name()))
 		if err != nil {
-      log.Printf("Skipping invalid desktop file %s", entry.Name())
+			log.Printf("Skipping invalid desktop file %s", entry.Name())
 			continue
 		}
 		app.Id = idCounter
@@ -38,7 +40,7 @@ func (a *App) GetApps(APPS_PATH string) ([]DesktopApp, error) {
 		apps = append(apps, app)
 	}
 
-  a.cachedDesktopApps = apps
+	a.cachedDesktopApps = apps
 	return apps, nil
 }
 
@@ -91,12 +93,18 @@ func parseMainSection(section string) (DesktopApp, error) {
 		switch key {
 		case "Name":
 			app.Name = value
+		case "GenericName":
+			app.GenericName = value
+		case "Comment":
+			app.Comment = value
 		case "Exec":
 			app.Exec = value
 		case "Icon":
 			app.Icon = value
 		case "Terminal":
 			app.Terminal = value
+    case "Keywords":
+      app.Keywords = strings.Split(value, ";")
 		}
 	}
 

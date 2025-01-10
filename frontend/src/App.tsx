@@ -3,7 +3,6 @@ import { Header } from "@components/Header";
 import { GetCachedDesktopApps } from "@wailsjs/go/app/App";
 import { app } from "@wailsjs/go/models";
 import { useCallback, useEffect, useState } from "react";
-import { Footer } from "./components/Footer";
 
 export function App() {
   const [desktopApps, setDesktopApps] = useState<app.DesktopApp[]>([]);
@@ -44,7 +43,7 @@ export function App() {
   }, [handleKeyDown]);
 
   return (
-    <div id="App" className="bg-[#181a1b] text-[#afa99e] overflow-hidden p-4 relative w-[800px] h-[400px] flex flex-col">
+    <div id="App" className="bg-[#181a1b] text-[#afa99e] overflow-hidden relative w-[800px] h-[400px] flex flex-col">
       <Header
         desktopApps={desktopApps}
         filteredDesktopApps={filteredDesktopApps}
@@ -56,7 +55,6 @@ export function App() {
         filteredDesktopApps={filteredDesktopApps}
         selectedAppidx={selectIdx}
       />
-      <Footer />
     </div>
   );
 }

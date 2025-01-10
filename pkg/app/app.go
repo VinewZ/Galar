@@ -56,6 +56,7 @@ func (a *App) registerGlobalShortcuts() {
 			if a.isAppVisible {
 				a.HideApp()
 			} else {
+        a.GetApps(APPS_PATH)
 				a.ShowApp()
 			}
 		}

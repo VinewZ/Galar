@@ -13,13 +13,13 @@ export function PluginLoader({ plugin }: PluginLoaderProps) {
   }
 
   return (
-    <div className="w-fulll h-full">
-      <iframe
-        id="plugin-iframe"
-        className="w-full h-full"
-        src={`${API_URL}${plugin.dir}/dist/${plugin.entry}`}
-      />
-    </div>
+      <div className="w-fulll h-full">
+        <iframe
+          id="plugin-iframe"
+          className="w-full h-full"
+          src={`${API_URL}${plugin.dir}/dist/${plugin.entry}`}
+        />
+      </div>
   );
 }
 
