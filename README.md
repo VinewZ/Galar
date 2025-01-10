@@ -2,7 +2,7 @@
 ~Golang App Laucnher for Arch Linux~
 
 An app launcher with multiple features, built using Go, Wails (Go + ReactJS).
-This application is designed to launch apps by default, but can be extended to include more features using [plugins](https://github.com/VinewZ/galar-plugins).
+This application is designed to launch apps by default, but can be extended to include more features using [plugins](https://github.com/VinewZ/galar-plugin-calc).
 
 ## Features
 - **App Launcher**: Browse and launch applications installed on the system.
@@ -65,14 +65,14 @@ The app runs in the background and can be opened or closed using the shortcut **
 
 Simply type to search for apps or input a command, and the app will respond accordingly.
 The only command available by default is the app launcher, which can be accessed just by typing the name of the app you want to launch.
-More commands can be added by downloading [plugins](https://github.com/VinewZ/galar-plugins).
+More commands can be added by downloading [plugins](https://github.com/VinewZ/galar-plugin-calc).
 To close the app, just press **SUPER + SPACE** again.
 
 ## How It Works
 - An API runs in the background to read the user filesystem and return the list of installed applications.
 - The frontend is built using ReactJS and communicates with the API to fetch the list of applications.
 - The frontend also handles user input and uses go functions to launch the selected application.
-- More commands can be added by downloading [plugins](https://github.com/VinewZ/galar-plugins).
+- More commands can be added by downloading [plugins](https://github.com/VinewZ/galar-plugin-calc).
 
 ## Folder Structure
 ```
