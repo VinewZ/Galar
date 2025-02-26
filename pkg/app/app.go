@@ -13,7 +13,6 @@ type App struct {
 	isAppVisible      bool
 	inputValue        string
 	selectionidx      int
-	cachedDesktopApps []DesktopApp
 }
 
 const APPS_PATH = "/usr/share/applications"

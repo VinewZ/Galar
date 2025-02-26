@@ -40,7 +40,6 @@ func (a *App) GetApps(APPS_PATH string) ([]DesktopApp, error) {
 		apps = append(apps, app)
 	}
 
-	a.cachedDesktopApps = apps
 	return apps, nil
 }
 

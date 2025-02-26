@@ -20,10 +20,6 @@ func (a *App) SetSelectionIdx(idx int) {
 	a.selectionidx = idx
 }
 
-func (a *App) GetCachedDesktopApps() []DesktopApp {
-	return a.cachedDesktopApps
-}
-
 // HideApp hides the application window
 func (a *App) HideApp() {
 	runtime.Hide(a.ctx)

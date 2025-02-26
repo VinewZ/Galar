@@ -1,6 +1,6 @@
 import { Content } from "@components/Content";
 import { Header } from "@components/Header";
-import { GetCachedDesktopApps } from "@wailsjs/go/app/App";
+import { GetApps } from "@wailsjs/go/app/App";
 import { app } from "@wailsjs/go/models";
 import { useCallback, useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ export function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await GetCachedDesktopApps();
+      const response = await GetApps("/usr/share/applications");
       setDesktopApps(response);
       setFilteredDesktopApps(response);
     })();
