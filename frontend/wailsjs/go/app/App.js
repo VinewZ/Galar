@@ -10,10 +10,6 @@ export function GetApps(arg1) {
   return window['go']['app']['App']['GetApps'](arg1);
 }
 
-export function GetCachedDesktopApps() {
-  return window['go']['app']['App']['GetCachedDesktopApps']();
-}
-
 export function GetGlobalInputValue() {
   return window['go']['app']['App']['GetGlobalInputValue']();
 }

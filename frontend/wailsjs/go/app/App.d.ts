@@ -6,8 +6,6 @@ export function ExecApp(arg1:app.DesktopApp):Promise<void>;
 
 export function GetApps(arg1:string):Promise<Array<app.DesktopApp>>;
 
-export function GetCachedDesktopApps():Promise<Array<app.DesktopApp>>;
-
 export function GetGlobalInputValue():Promise<string>;
 
 export function GetPlugins():Promise<Array<app.Plugin>>;
